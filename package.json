@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/chinhippy/liri-node-app/issues"
   },
-  "homepage": "https://github.com/chinhippy/liri-node-app#readme"
+  "homepage": "https://github.com/chinhippy/liri-node-app#readme",
+  "dependencies": {
+    "dotenv": "^6.2.0"
+  }
 }
