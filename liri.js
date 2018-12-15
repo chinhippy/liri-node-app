@@ -2,7 +2,7 @@
 require("dotenv").config();
 const keys = require("./keys.js");
 const moment = require("moment");
-// const fs = require("fs");
+const fs = require("fs");
 const axios = require("axios");
 // const inquirer = require("inquirer");
 // const request = require("request");
@@ -31,60 +31,116 @@ switch (argument) {
     doWhatItSays();
     break;
   default:
-    console.log(`-+-+-+-+-+-+-+-+-\n please enter "concert-this", "spotify-this-song", or "do-what-it-says", followed by your request\n-+-+-+-+-+-+-+-+-`);
+    console.log(`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-\n please enter "concert-this", "spotify-this-song", or "do-what-it-says", followed by your request\n-+-+-+-+-+-+-+-+-`);
 }
 
 // Function to take user input of artist/band & output upcoming events
 
 function concertSearch(inputData) {
-  if(!inputData) {
-  inputData = "Super Furry Animals";
+  if (!inputData) {
+    inputData = "Super Furry Animals";
   }
   axios.get(`https://rest.bandsintown.com/artists/${inputData}/events?app_id=codingbootcamp`)
-  .then(function(response) {
-    // console.log(response.data)
-    for (var i=0; i<response.data.length; i++) {
-      console.log(`Venue: ${response.data[i].venue.name}`);
-      console.log(`City: ${response.data[i].venue.city}`);
-      console.log("Date: " + moment(response.data[i].datetime).format("MM/DD/YYYY"));
-      console.log("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
-    }
-  })
-  .catch(function(error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-    console.log(error.config);
-  });
+    .then(function (response) {
+      // console.log(response.data)
+      for (var i = 0; i < response.data.length; i++) {
+        console.log(`Venue: ${response.data[i].venue.name}`);
+        console.log(`City: ${response.data[i].venue.city}`);
+        console.log("Date: " + moment(response.data[i].datetime).format("MM/DD/YYYY"));
+        console.log("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
+      }
+    })
+    .catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    });
 }
 
 // Function to take user input of movie name & output movie info
 
 function movieSearch(inputData) {
   if (!inputData) {
-      inputData = 'Mr. Nobody';
+    inputData = 'Mr. Nobody';
   }
   axios.get(`http://www.omdbapi.com/?t="${inputData}"&y=&plot=short&apikey=trilogy`).then(function (jsonData) {
 
 
-      var jsonData = jsonData.data;
-      console.log(`Title: ${jsonData.Title}`);
-      console.log(`Year: ${jsonData.Year}`);
-      console.log(`IMDB Rating: ${jsonData.imdbRating}`);
-      console.log(`Rotten Tomatoes Rating: ${jsonData.tomatoRating}`);
-      console.log(`Country: ${jsonData.Country}`);
-      console.log(`Language: ${jsonData.Language}`);
-      console.log(`Plot: ${jsonData.Plot}`);
-      console.log(`Actors: ${jsonData.Actors}`);
+    var jsonData = jsonData.data;
+    console.log(`Title: ${jsonData.Title}`);
+    console.log(`Year: ${jsonData.Year}`);
+    console.log(`IMDB Rating: ${jsonData.imdbRating}`);
+    console.log(`Rotten Tomatoes Rating: ${jsonData.tomatoRating}`);
+    console.log(`Country: ${jsonData.Country}`);
+    console.log(`Language: ${jsonData.Language}`);
+    console.log(`Plot: ${jsonData.Plot}`);
+    console.log(`Actors: ${jsonData.Actors}`);
 
   });
 };
 
-// Function to take spotify input and output
+// Function to take song name input and output spotify data
 
+function songSearch(inputData) {
+  if (!inputData) {
+    inputData = 'The Sign';
+  }
+
+  spotify.search({
+    type: 'track',
+    query: inputData,
+    limit: 3
+  }, function (err, data) {
+    if (err) {
+      console.log('Error occurred: ' + err);
+      return;
+    }
+    var songInfo = data.tracks.items;
+    for (var i = 0; i < songInfo.length; i++) {
+      if (songInfo[i].name.toLowerCase().indexOf(inputData.toLowerCase()) >= 0) {
+        console.log[i];
+        console.log(`Artist(s): ${songInfo[i].artists[0].name}`);
+        console.log(`Song: ${songInfo[i].name}`);
+        console.log(`Preview Link: ${songInfo[i].preview_url}`);
+        console.log(`Album: ${songInfo[i].album.name}`);
+        console.log(`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-`);
+      }
+    }
+  });
+};
+
+// Function to take text from random.txt and call one of LIRI's commands
+
+function doWhatItSays() {
+  fs.readFile('random.txt', 'utf8', function(error, randomData){
+
+    if(error) {
+      return console.log(error);
+    }
+
+    let randomInfo = randomData.split(",");
+    let randomAction = randomInfo[0];
+    let randomInput = randomInfo[1];
+
+    switch (randomAction) {
+      case "concert-this":
+      concertSearch(randomInput);
+      break;
+      case "spotify-this-song":
+      songSearch(randomInput);
+      break;
+      case "movie-this":
+      movieSearch(randomInput);
+      break;
+      default:
+      console.log("Do something with your life and input a value!!");
+    }
+  })
+};
