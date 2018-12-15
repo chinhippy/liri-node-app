@@ -18,6 +18,11 @@
   },
   "homepage": "https://github.com/chinhippy/liri-node-app#readme",
   "dependencies": {
-    "dotenv": "^6.2.0"
+    "axios": "^0.18.0",
+    "dotenv": "^6.2.0",
+    "inquirer": "^6.2.1",
+    "moment": "^2.22.2",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.88.0"
   }
 }
