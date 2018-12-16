@@ -15,6 +15,7 @@ This is what it looks like when LIRI is asked to 'concert-this'.
 
 The following 2 images are of LIRI's command 'spotify-this-song'. The first is when no song title is given, making 'The Sign' the default song, and the second is when a song title is given.
 
+![image](https://user-images.githubusercontent.com/34128946/50049038-ccaa7000-00a0-11e9-9692-a6c2be07f64f.png)
 
 
 ![image](https://user-images.githubusercontent.com/34128946/50048850-8c94be80-009b-11e9-84b0-29696d0ee57c.png)
