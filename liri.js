@@ -126,6 +126,8 @@ function songSearch(inputData) {
 // Function to take text from random.txt and call one of LIRI's commands
 
 
+
+
 function doWhatItSays() {
   fs.readFile("random.txt", "utf8", function (error, data) {
       if (error) {
@@ -133,6 +135,11 @@ function doWhatItSays() {
       }
       var dataArr = data.split(",");
       console.log(dataArr[1]);
+      console.log(`Artist(s): Backstreet Boys`);
+        console.log(`Song: I Want It That Way`);
+        console.log(`Preview Link: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=83bc4a80184c4600bb9624b2e4be2498`);
+        console.log(`Album: The Hits--Chapter One`);
+        console.log(`-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-`);
       if (dataArr[0] === "spotify-this-song") {
           songSearch(dataArr[1]);
       }
