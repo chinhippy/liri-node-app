@@ -68,7 +68,7 @@ function concertSearch(inputData) {
 
 function movieSearch(inputData) {
   if (!inputData) {
-    inputData = 'Mr. Nobody';
+    inputData = "Mr. Nobody";
   }
   axios.get(`http://www.omdbapi.com/?t="${inputData}"&y=&plot=short&apikey=trilogy`).then(function (jsonData) {
 
@@ -88,9 +88,16 @@ function movieSearch(inputData) {
 
 // Function to take song name input and output spotify data
 
+// function songSearch(inputData) {
+//   if (!inputData) {
+//     console.log(***BAND NAME===ACE OF BASE***);
+// 	console.log(***SONG NAME===THE SIGN****);
+// 	console.log(****.etc*****);
+//   break;
+  
 function songSearch(inputData) {
   if (!inputData) {
-    inputData = 'The Sign';
+    inputData = "That's Entertainment";
   }
 
   spotify.search({
@@ -118,29 +125,22 @@ function songSearch(inputData) {
 
 // Function to take text from random.txt and call one of LIRI's commands
 
+
 function doWhatItSays() {
-  fs.readFile('random.txt', 'utf8', function(error, randomData){
-
-    if(error) {
-      return console.log(error);
-    }
-
-    let randomInfo = randomData.split(",");
-    let randomAction = randomInfo[0];
-    let randomInput = randomInfo[1];
-
-    switch (randomAction) {
-      case "concert-this":
-      concertSearch(randomInput);
-      break;
-      case "spotify-this-song":
-      songSearch(randomInput);
-      break;
-      case "movie-this":
-      movieSearch(randomInput);
-      break;
-      default:
-      console.log("Do something with your life and input a value!!");
-    }
-  })
-};
+  fs.readFile("random.txt", "utf8", function (error, data) {
+      if (error) {
+          return console.log(error);
+      }
+      var dataArr = data.split(",");
+      console.log(dataArr[1]);
+      if (dataArr[0] === "spotify-this-song") {
+          songSearch(dataArr[1]);
+      }
+      else if (dataArr[0] === "movie-this") {
+          movieSearh(dataArr[1]);
+      }
+      else {
+          concertSearch();
+      }
+  });
+}
