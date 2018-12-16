@@ -26,6 +26,11 @@ The next 2 images are of the command 'movie-this'. The first image is an example
 
 ![image](https://user-images.githubusercontent.com/34128946/50048889-60c60880-009c-11e9-9a47-90227ada5cf5.png)
 
+The last image is the 'do-what-it-says' command. This is where LIRI takes the text of a random file and uses it to call one of LIRI's commands.
+
+![image](https://user-images.githubusercontent.com/34128946/50055069-58f37c00-010f-11e9-93a4-711107b06a8a.png)
+
+
 
 
 
